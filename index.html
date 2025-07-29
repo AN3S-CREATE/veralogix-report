@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veralogix | Let's Mine Smarter, Together</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: High-Tech Dark Mode -->
+    <!-- Application Structure Plan: The SPA follows the narrative of the new "LET'S MINE SMARTER, TOGETHER" presentation. It starts with a more direct hero section, then frames the problem with the "Tshepo's Journey" narrative. New pages for Trimble, Loadscan, VTOL Drones and Cabin-Eye have been added. The core remains a tabbed interface for the key pillars. A new deep-dive section for SentryMine has been added. The app concludes with a more robust "Smart Hub" concept and a stronger, more visionary call to action about targeting measurable returns and building an autonomous future. This structure was chosen to make the complex solution easily digestible while aligning with the new presentation's more confident and visual tone. -->
+    <!-- Visualization & Content Choices: Data from the source reports is presented interactively. 1) Haulage Optimization: An interactive Chart.js bar chart dynamically shows the financial impact of inefficiency based on user selection. Goal: Compare. 2) Safety Incursions: A Chart.js stacked bar chart visually represents safety trends over time. Goal: Show Change/Trends. 3) Smart Hub: An enhanced HTML/CSS diagram with hover effects is used. Goal: Organize/Relationships. Interaction: Hover effects on each pillar. Justification: Reinforces the integrated ecosystem concept more dynamically than a static image. 4) Aerial Intelligence: Key specs are presented in a clean HTML grid for readability, and adaptability benefits are listed with icons. Goal: Inform. Justification: Breaks down dense technical info into a more digestible format. All visualizations use Canvas via Chart.js, with no SVG or Mermaid used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1A1A1A;
+            color: #CCCCCC;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(26, 26, 26, 0.9) 20%, rgba(26, 26, 26, 0.1)), url('https://iili.io/F5mcDxa.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .tab-active {
+            border-color: #BFFF00;
+            color: #BFFF00;
+            background-color: rgba(191, 255, 0, 0.05);
+        }
+        .tab-inactive {
+            border-color: transparent;
+            color: #A9A9A9;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+        .hub-node {
+            transition: all 0.3s ease-in-out;
+            cursor: default;
+        }
+        .hub-node:hover {
+            transform: scale(1.1) translateX(-45%) translateY(-45%);
+            z-index: 20;
+        }
+        .hub-node:hover .hub-text {
+            background-color: #BFFF00 !important;
+            color: #1A1A1A !important;
+            border-color: #BFFF00 !important;
+        }
+        .hub-line {
+            position: absolute;
+            background-color: #4A4A4A;
+            z-index: 1;
+        }
+        .prose {
+             color: #A9A9A9;
+        }
+        .prose h3 {
+            color: #FFFFFF;
+        }
+        .btn-primary {
+             background-color: #BFFF00;
+             color: #1A1A1A;
+             font-weight: 700;
+        }
+         .btn-primary:hover {
+             background-color: #d8ff66;
+         }
+        .btn-secondary {
+            background-color: #2D2D2D;
+            color: #CCCCCC;
+        }
+        .btn-secondary:hover {
+            background-color: #3f3f3f;
+        }
+        .btn-active {
+            background-color: #BFFF00;
+            color: #1A1A1A;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <header class="bg-[#1A1A1A]/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 border-b border-gray-800">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="https://iili.io/F5mGF24.png" alt="Veralogix Logo" class="h-10 w-auto">
+            </div>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="#loadscan" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs">LOADSCAN®</a>
+                <a href="#trimble" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs">TRIMBLE®</a>
+                <a href="#cabin-eye" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs">CABIN-EYE™</a>
+                <a href="#vtol-drones" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs">VTOL DRONES™</a>
+                <a href="#sentrymine" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs">SENTRYMINE™</a>
+                <a href="#solutions" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs">SOLUTIONS</a>
+                <a href="#hub" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs">SMART HUB</a>
+                <a href="#pilot" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs">ROI</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-bg h-screen flex items-center justify-start text-white">
+            <div class="container mx-auto px-6 md:px-12">
+                <div class="max-w-2xl text-left">
+                    <p class="font-heading text-[#BFFF00] font-semibold tracking-widest mb-2 text-sm">YOUR ROI SUCCESS IS</p>
+                    <h2 class="font-heading text-5xl md:text-7xl font-black mb-4 leading-tight">AUTONOMOUS</h2>
+                    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-lg">We're not just testing—we're targeting your measurable returns. And the future is autonomous.</p>
+                    <div class="flex items-center bg-black/50 backdrop-blur-sm p-2 max-w-md border border-gray-700">
+                        <input type="text" placeholder="Start your exploration here..." class="bg-transparent w-full text-white placeholder-gray-500 focus:outline-none px-4">
+                        <button class="bg-[#BFFF00] text-black p-3 hover:bg-[#d8ff66] transition-colors duration-300">
+                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="intro" class="py-20 bg-[#222222]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">THE DAY BEGINS WITH CONFIDENCE, NOT PAPERWORK</h2>
+                     <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">Follow an operator—we'll call him Tshepo. His day begins not at the gate, but on the bus, transforming travel time into saved safety time.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="fade-in bg-[#1A1A1A] p-8 border border-gray-800">
+                        <img src="https://iili.io/F5yAEox.png" alt="Automated Compliance Icon" class="h-12 mx-auto mb-4">
+                        <h3 class="text-xl mb-2 text-white font-heading">AUTOMATED COMPLIANCE</h3>
+                        <p class="text-gray-400">SentryMine™ works overnight verifying licenses and medicals. SentryTrack™ tracks attendance and fitness for duty.</p>
+                    </div>
+                    <div class="fade-in bg-[#1A1A1A] p-8 border border-gray-800">
+                         <img src="https://iili.io/F5yA0tj.png" alt="Instant Check-in Icon" class="h-12 mx-auto mb-4">
+                        <h3 class="text-xl mb-2 text-white font-heading">INSTANT CHECK-IN</h3>
+                        <p class="text-gray-400">On the bus, a tap of his smart badge instantly logs attendance, creating a reliable, geo-locked audit trail.</p>
+                    </div>
+                    <div class="fade-in bg-[#1A1A1A] p-8 border border-gray-800">
+                         <img src="https://iili.io/F5yAGMQ.png" alt="Mobile Toolbox Talk Icon" class="h-12 mx-auto mb-4">
+                        <h3 class="text-xl mb-2 text-white font-heading">MOBILE TOOLBOX TALK</h3>
+                        <p class="text-gray-400">Daily safety briefings on the bus improve message retention and ensure the team arrives at the face ready to work.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="loadscan" class="py-20 bg-[#1E1E1E]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">Loadscan®: MAXIMIZING ASSET VALUE & TRANSPARENCY</h2>
+                     <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">The ultimate tool for haulage optimization, providing indisputable, accurate data to protect assets and ensure fair compensation.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="fade-in">
+                        <img src="https://iili.io/F77K3js.png" alt="Loadscan System in Action" class="w-full h-full object-cover border-4 border-gray-800">
+                    </div>
+                    <div class="fade-in space-y-6">
+                        <div class="bg-[#222222] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">TRANSPARENT CONTRACTOR MANAGEMENT</h4>
+                            <p class="text-gray-400">With multiple hauling contractors, disputes over moved tonnage can arise. Loadscan® provides an indisputable, transparent basis for payment, eliminating friction and ensuring fair compensation.</p>
+                        </div>
+                        <div class="bg-[#222222] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">PROTECTING CRITICAL ASSETS</h4>
+                            <p class="text-gray-400">The health of your haul truck fleet is the heart of the operation. By preventing the consistent overloading that damages frames, transmissions, and tyres, we extend the life of your most expensive assets and reduce maintenance costs.</p>
+                        </div>
+                        <div class="bg-[#222222] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">ACCURATE FINANCIAL PLANNING</h4>
+                            <p class="text-gray-400">Knowing the exact, verified volume of coal vs. waste moved is critical for accurate accounting, royalty calculations, and forecasting.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trimble" class="py-20 bg-[#222222]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">Trimble®: PRECISION & PROFITABILITY</h2>
+                     <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">A grade control technology platform that is a strategic imperative to de-risk operations, enhance profitability, and secure a long-term social license to operate.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="fade-in">
+                        <img src="https://iili.io/F77KTue.png" alt="Trimble Earthworks System" class="w-full h-full object-cover border-4 border-gray-800">
+                    </div>
+                    <div class="fade-in space-y-6">
+                        <div class="bg-[#1A1A1A] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">ELIMINATE REWORK & BOOST PRODUCTIVITY</h4>
+                            <p class="text-gray-400">Achieve centimetre-level accuracy to get the job right the first time. This eliminates costly rework, saving fuel, maintenance hours, and skilled operator time, with documented productivity gains of up to 34%.</p>
+                        </div>
+                        <div class="bg-[#1A1A1A] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">ENHANCE SAFETY & ASSET LONGEVITY</h4>
+                            <p class="text-gray-400">Build safer, more stable, and properly engineered haul roads. This mitigates vehicle incidents and reduces wear on high-value assets like haul truck tyres, which can cost upwards of R750,000 per unit.</p>
+                        </div>
+                        <div class="bg-[#1A1A1A] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">GUARANTEE ENVIRONMENTAL COMPLIANCE</h4>
+                            <p class="text-gray-400">Ensure the final landform precisely matches the approved rehabilitation design. This provides a verifiable, as-built digital record to de-risk the closure certificate process and secure the return of multi-million Rand financial provisions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cabin-eye" class="py-20 bg-[#1E1E1E]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">Cabin-Eye™: THE INTERNAL GUARDIAN</h2>
+                     <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">A proactive layer of defense using ruggedized, in-cab camera technology to monitor operator alertness and prevent fatigue-related incidents.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="fade-in space-y-6">
+                        <div class="bg-[#222222] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">PROACTIVE FATIGUE MANAGEMENT</h4>
+                            <p class="text-gray-400">Long shifts are a reality of mining. Cabin-Eye™ provides a critical layer of defense, using advanced eye-scanning technology to monitor operators for signs of fatigue or distraction, helping you achieve your zero-harm targets.</p>
+                        </div>
+                        <div class="bg-[#222222] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">MITIGATE REAL-WORLD RISK</h4>
+                            <p class="text-gray-400">Fatigue is a major contributor to accidents. This system ensures every operator is fit for duty, preventing incidents before they happen in the dynamic environment of an open-cast pit.</p>
+                        </div>
+                        <div class="bg-[#222222] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">ACTIONABLE SAFETY DATA</h4>
+                            <p class="text-gray-400">The system doesn't just prevent accidents; it provides invaluable data on near-misses, allowing you to identify high-risk areas or behaviors and intervene with targeted training or operational changes.</p>
+                        </div>
+                    </div>
+                    <div class="fade-in">
+                        <img src="https://iili.io/F77FiyF.png" alt="Cabin-Eye Technology" class="w-full h-full object-cover border-4 border-gray-800">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="vtol-drones" class="py-20 bg-[#222222]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">VTOL DRONES™: YOUR EYE IN THE SKY</h2>
+                     <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">Automate dull, dangerous, and dirty jobs with advanced Vertical Take-Off and Landing drones that provide a complete, intelligent view of the mine.</p>
+                </div>
+                <div class="grid md:grid-cols-5 gap-8 items-center">
+                    <div class="md:col-span-2 fade-in">
+                        <img src="https://iili.io/F77F43B.png" alt="ARACE ROC Pro VTOL Drone" class="w-full">
+                    </div>
+                    <div class="md:col-span-3 fade-in space-y-6">
+                        <div class="bg-[#1A1A1A] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">THE TECHNOLOGY: ARACE ROC PRO</h4>
+                            <p class="text-gray-400 mb-4">A high-endurance drone with a 3-hour flight time and 225km range, designed for large-scale mining operations.</p>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-gray-300">
+                                <div><strong class="text-white">Flight Time:</strong> 3 Hours</div>
+                                <div><strong class="text-white">Range:</strong> 225km</div>
+                                <div><strong class="text-white">Max Payload:</strong> 5kg</div>
+                                <div><strong class="text-white">Cruise Speed:</strong> 19-22m/s</div>
+                                <div><strong class="text-white">Service Ceiling:</strong> 4000m</div>
+                                <div><strong class="text-white">Wind Resistance:</strong> Up to 17m/s</div>
+                            </div>
+                        </div>
+                        <div class="bg-[#1A1A1A] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">THE MISSION: UNPRECEDENTED OVERSIGHT</h4>
+                            <ul class="space-y-3 text-gray-400">
+                                <li class="flex items-start"><span class="text-[#BFFF00] mr-3 mt-1">✓</span><div><strong>Accelerated Sales & Planning:</strong> Conduct stockpile surveys 95% faster to provide near real-time data to your commercial team.</div></li>
+                                <li class="flex items-start"><span class="text-[#BFFF00] mr-3 mt-1">✓</span><div><strong>Proactive Site Security:</strong> Patrol vast perimeters more effectively than ground crews to detect theft, illegal mining, and security breaches as they happen.</div></li>
+                                <li class="flex items-start"><span class="text-[#BFFF00] mr-3 mt-1">✓</span><div><strong>Enhanced Environmental Compliance:</strong> Use for pre-and-post-blast surveys, and monitor dust suppression and water runoff to provide critical data for reporting.</div></li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions" class="py-20 bg-[#1E1E1E]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">AN INTEGRATED ECOSYSTEM FOR PEAK PERFORMANCE</h2>
+                    <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">This isn't just a collection of tools; it's one intelligent, connected platform. Explore the five pillars of our solution.</p>
+                </div>
+
+                <div class="bg-[#222222] border border-gray-800 p-4 md:p-6 fade-in">
+                    <div class="flex flex-wrap justify-center border-b border-gray-700 mb-6 -mx-2">
+                        <button data-tab="tab-1" class="tab-button tab-active text-sm md:text-base py-3 px-2 md:px-6 border-b-2 transition-all duration-300 font-heading">HAULAGE OPTIMISATION</button>
+                        <button data-tab="tab-2" class="tab-button tab-inactive text-sm md:text-base py-3 px-2 md:px-6 border-b-2 transition-all duration-300 font-heading">PRECISION EARTHWORKS</button>
+                        <button data-tab="tab-3" class="tab-button tab-inactive text-sm md:text-base py-3 px-2 md:px-6 border-b-2 transition-all duration-300 font-heading">PROACTIVE SAFETY</button>
+                        <button data-tab="tab-4" class="tab-button tab-inactive text-sm md:text-base py-3 px-2 md:px-6 border-b-2 transition-all duration-300 font-heading">AERIAL INTELLIGENCE</button>
+                        <button data-tab="tab-5" class="tab-button tab-inactive text-sm md:text-base py-3 px-2 md:px-6 border-b-2 transition-all duration-300 font-heading">WORKFORCE MANAGEMENT</button>
+                    </div>
+                    
+                    <div id="tab-content" class="min-h-[600px] py-4">
+                        <div id="tab-1" class="tab-panel">
+                             <div class="prose max-w-none prose-lg mb-8 p-4">
+                                <h3 class="text-2xl font-heading">HAULAGE OPTIMISATION: MAXIMIZING ASSET VALUE</h3>
+                                <p>Loadscan® provides drive-through scanning to measure the exact volume of every load without stopping. This increases material moved by 10-15%, reduces major component failures from overloading by up to 50%, and ensures 100% accurate reconciliation for transparent contractor management, asset protection, and financial planning.</p>
+                            </div>
+                            <div class="text-center mb-4 space-x-2">
+                                <button id="loadOptimalBtn" class="font-heading btn-primary px-4 py-2 btn-active">OPTIMAL LOAD</button>
+                                <button id="loadUnderBtn" class="font-heading btn-secondary px-4 py-2">UNDERLOADED (90%)</button>
+                                <button id="loadOverBtn" class="font-heading btn-secondary px-4 py-2">OVERLOADED (110%)</button>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="haulageChart"></canvas>
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-panel hidden">
+                            <div class="prose max-w-none prose-lg mb-8 p-4">
+                                <h3 class="text-2xl font-heading">PRECISION EARTHWORKS: ENGINEERING PERFECT BENCHES & SAFER ROADS</h3>
+                                <p>Powered by Trimble®, this system guides operators to centimetre-level accuracy. It eliminates rework, cuts fuel and maintenance costs, and ensures compliance with South Africa's strict rehabilitation laws. We enhance this with OPTRON custom GNSS solutions for operational backup and peace of mind, ensuring reliability with robust enclosures and antenna mountings.</p>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-8 items-center">
+                                <img src="https://freeimage.host/i/F5y4f9V" alt="Precision Earthworks" class="w-full">
+                                <div class="text-center bg-[#1A1A1A] p-6 border border-gray-800">
+                                    <img src="https://i.imgur.com/G3tS4RV.png" alt="OPTRON GNSS Enclosure" class="w-full mb-4">
+                                    <h4 class="text-lg text-white font-heading">RELIABLE SUPPORT & PEACE OF MIND</h4>
+                                    <p class="text-gray-400">OPTRON custom enclosures and mountings provide robust, reliable backup for surveyors and operators.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-3" class="tab-panel hidden">
+                             <div class="prose max-w-none prose-lg mb-8 p-4">
+                                <h3 class="text-2xl font-heading">PROACTIVE SAFETY: THE INTELLIGENT CO-PILOT</h3>
+                                <p>Correct-AI wraps every vehicle in a shield of safety intelligence. Externally, Prox-Eye™ intelligently differentiates between people and vehicles to prevent accidents. Internally, Cabin-Eye™ monitors operators for fatigue. This system provides actionable data on near-misses, allowing you to mitigate risks and manage fatigue before an incident occurs.</p>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="safetyChart"></canvas>
+                            </div>
+                        </div>
+                        <div id="tab-4" class="tab-panel hidden">
+                           <div class="prose max-w-none prose-lg mb-8 p-4">
+                                <h3 class="text-2xl font-heading">AERIAL INTELLIGENCE: UNMATCHED OVERSIGHT AND ADAPTABILITY</h3>
+                                <p>Advanced VTOL drones automate perimeter security and conduct stockpile surveys 95% faster. This is more than an eye in the sky; it's a tool for total operational awareness, providing critical data for business intelligence, asset protection, and logistics management.</p>
+                           </div>
+                           <div class="grid md:grid-cols-2 gap-8">
+                                <div class="bg-[#1A1A1A] p-6 border border-gray-800">
+                                    <h4 class="font-bold text-xl mb-4 text-white font-heading">ARACE ROC PRO: KEY SPECIFICATIONS</h4>
+                                    <div class="grid grid-cols-2 gap-4 text-gray-400">
+                                        <div><strong>Flight Time:</strong> 3 Hours</div>
+                                        <div><strong>Range:</strong> 225km</div>
+                                        <div><strong>Max Payload:</strong> 5kg</div>
+                                        <div><strong>Cruise Speed:</strong> 19-22m/s</div>
+                                        <div><strong>Service Ceiling:</strong> 4000m</div>
+                                        <div><strong>Wind Resistance:</strong> Up to 17m/s</div>
+                                    </div>
+                                </div>
+                                <div class="bg-[#1A1A1A] p-6 border border-gray-800">
+                                    <h4 class="font-bold text-xl mb-4 text-white font-heading">ADAPTABILITY FOR BUSINESS VALUE</h4>
+                                     <ul class="space-y-3 text-gray-400">
+                                        <li class="flex items-start"><span class="text-[#BFFF00] mr-2 text-xl">📈</span><div><strong>Business Intelligence:</strong> Unlock valuable insights from collected data.</div></li>
+                                        <li class="flex items-start"><span class="text-[#BFFF00] mr-2 text-xl">🛡️</span><div><strong>Asset Protection:</strong> Safeguard critical assets with robust surveillance.</div></li>
+                                        <li class="flex items-start"><span class="text-[#BFFF00] mr-2 text-xl">🚚</span><div><strong>Logistics Management:</strong> Improve traffic flow and optimize routes.</div></li>
+                                        <li class="flex items-start"><span class="text-[#BFFF00] mr-2 text-xl">👁️</span><div><strong>Oversight & Security:</strong> Gain unprecedented oversight of the entire operation.</div></li>
+                                     </ul>
+                                </div>
+                           </div>
+                        </div>
+                        <div id="tab-5" class="tab-panel hidden">
+                            <div class="prose max-w-none prose-lg mb-8 p-4">
+                                <h3 class="text-2xl font-heading">WORKFORCE MANAGEMENT: A CULTURE OF ACCOUNTABILITY</h3>
+                                <p>The SentryMine™ and SentryTrack™ platforms ensure 100% of personnel are 100% compliant before they even step on site. This strengthens DMRE compliance, reduces audit prep from weeks to minutes, and eliminates queues to increase the time available for moving coal.</p>
+                            </div>
+                             <div class="flex justify-center">
+                                <img src="https://freeimage.host/i/F5ypM0B" alt="Workforce Management Dashboard" class="max-w-full md:max-w-2xl border-4 border-gray-700">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="sentrymine" class="py-20 bg-[#1E1E1E]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">SentryMine™: THE NERVE CENTER</h2>
+                     <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">The foundational layer of your smart mine. SentryMine™ is the compliance and productivity engine that ensures every person on site is safe, certified, and ready to work.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="fade-in">
+                        <img src="https://iili.io/F77K08P.png" alt="SentryMine Dashboard" class="w-full border-4 border-gray-800">
+                    </div>
+                    <div class="fade-in space-y-6">
+                        <div class="bg-[#222222] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">STRENGTHENED DMRE COMPLIANCE</h4>
+                            <p class="text-gray-400">Gain a tamper-proof, digital record of every worker's status and safety briefing attendance. Reduce audit preparation time from weeks to minutes and strengthen your legal defensibility.</p>
+                        </div>
+                        <div class="bg-[#222222] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">INCREASED COAL MOVED</h4>
+                            <p class="text-gray-400">By eliminating queues and starting shifts on time, you give back productive minutes to every operator. This directly translates to more time for loading and hauling, increasing daily output.</p>
+                        </div>
+                        <div class="bg-[#222222] p-6 border border-gray-800">
+                            <h4 class="font-heading text-xl text-[#BFFF00] mb-2">A CULTURE OF ACCOUNTABILITY</h4>
+                            <p class="text-gray-400">The system ensures that 100% of personnel are 100% compliant before they even step foot on site, creating a proactive culture of safety and responsibility.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hub" class="py-20 bg-[#222222]">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">BRINGING IT ALL TOGETHER: THE SMART HUB</h2>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto mb-16 fade-in">This isn't a collection of separate products; it's one integrated system for total intelligence, turning data into actionable insights for workforce management and production optimization.</p>
+                
+                <div class="relative w-full max-w-2xl mx-auto h-[450px] md:h-[500px] fade-in" id="hub-diagram">
+                    <div id="hub-center" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 md:w-48 md:h-48 bg-[#BFFF00] rounded-full flex items-center justify-center text-[#1A1A1A] font-black text-xl text-center shadow-2xl z-10 p-4 hub-node font-heading">SMART HUB</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pilot" class="py-20 bg-[#1E1E1E]">
+            <div class="container mx-auto px-6 text-center">
+                 <div class="flex justify-center fade-in">
+                    <div class="bg-[#222222] p-8 md:p-12 max-w-4xl border border-[#BFFF00]/20">
+                        <h2 class="text-3xl md:text-4xl text-white mb-4 font-heading">YOUR ROI SUCCESS IS <span class="text-[#BFFF00]">AUTONOMOUS</span>.</h2>
+                        <p class="text-lg text-gray-400 max-w-3xl mx-auto mb-8">We’re not just testing—we’re targeting your measurable returns. The technology is proven and ready to deploy.</p>
+                        <a href="#" class="btn-primary px-8 py-4 hover:bg-[#d8ff66] transition-all duration-300 transform hover:scale-105 inline-block font-heading">LET'S BUILD IT TOGETHER</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black py-8">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>&copy; 2025 Veralogix Group. All rights reserved.</p>
+            <p class="text-sm mt-2">Joining The Dots.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const haulageData = {
+                optimal: {
+                    labels: ['Trips', 'Diesel (Litres)', 'Cost (ZAR)'],
+                    data: [20243, 132845, 2922583],
+                    backgroundColor: 'rgba(191, 255, 0, 0.7)',
+                    label: 'Optimal Load (100%)'
+                },
+                under: {
+                    labels: ['Trips', 'Diesel (Litres)', 'Cost (ZAR)'],
+                    data: [22493, 140230, 3085056],
+                    backgroundColor: 'rgba(251, 191, 36, 0.7)',
+                    label: 'Underloaded (90%)'
+                },
+                over: {
+                    labels: ['Trips', 'Diesel (Litres)', 'Cost (ZAR)'],
+                    data: [18403, 144924, 3188320],
+                    backgroundColor: 'rgba(239, 68, 68, 0.7)',
+                    label: 'Overloaded (110%)'
+                }
+            };
+            
+            const safetyData = {
+                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                datasets: [
+                    { label: 'Vehicle', data: [20, 25, 30, 22, 18, 25], backgroundColor: 'rgba(59, 130, 246, 0.7)' },
+                    { label: 'Person', data: [40, 35, 20, 28, 32, 29], backgroundColor: 'rgba(191, 255, 0, 0.7)' },
+                    { label: 'Obstacle', data: [25, 20, 15, 18, 22, 19], backgroundColor: 'rgba(107, 114, 128, 0.7)' }
+                ]
+            };
+            
+            const chartTextColor = '#FFFFFF';
+            const chartGridColor = 'rgba(255, 255, 255, 0.1)';
+
+            let haulageChart;
+            function createHaulageChart(dataset) {
+                const ctx = document.getElementById('haulageChart').getContext('2d');
+                if (haulageChart) haulageChart.destroy();
+                haulageChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: dataset.labels,
+                        datasets: [{
+                            label: dataset.label,
+                            data: dataset.data,
+                            backgroundColor: dataset.backgroundColor,
+                            borderColor: dataset.backgroundColor.replace('0.7', '1'),
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'IMPACT OF LOAD FACTOR ON HAULAGE (TO MOVE 1M M³)', font: { family: "'Montserrat', sans-serif", size: 16, weight: '700' }, color: chartTextColor },
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed.y !== null) {
+                                            if (context.label.includes('ZAR')) {
+                                                label += new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' }).format(context.parsed.y);
+                                            } else {
+                                                label += new Intl.NumberFormat('en-ZA').format(context.parsed.y);
+                                            }
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                ticks: {
+                                   color: chartTextColor,
+                                   callback: function(value) {
+                                      if (value >= 1000000) return (value / 1000000) + 'M';
+                                      if (value >= 1000) return (value / 1000) + 'K';
+                                      return value;
+                                   }
+                                },
+                                grid: { color: chartGridColor }
+                            },
+                            x: { ticks: { color: chartTextColor }, grid: { display: false } }
+                        }
+                    }
+                });
+            }
+            
+            function createSafetyChart() {
+                const ctx = document.getElementById('safetyChart')?.getContext('2d');
+                if(!ctx) return;
+                new Chart(ctx, {
+                    type: 'bar', data: safetyData,
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'DANGER ZONE INCURSIONS BY DAY OF THE WEEK', font: { family: "'Montserrat', sans-serif", size: 16, weight: '700' }, color: chartTextColor },
+                            legend: { position: 'top', labels: { color: chartTextColor } },
+                        },
+                        scales: {
+                            x: { stacked: true, ticks: { color: chartTextColor }, grid: { display: false } },
+                            y: {
+                                stacked: true, beginAtZero: true,
+                                title: { display: true, text: 'NUMBER OF DETECTIONS', color: chartTextColor, font: {family: "'Montserrat', sans-serif"}},
+                                ticks: { color: chartTextColor }, grid: { color: chartGridColor }
+                            }
+                        }
+                    }
+                });
+            }
+
+            const tabs = document.querySelectorAll('.tab-button');
+            const panels = document.querySelectorAll('.tab-panel');
+            const optimalBtn = document.getElementById('loadOptimalBtn');
+            const underBtn = document.getElementById('loadUnderBtn');
+            const overBtn = document.getElementById('loadOverBtn');
+            const loadButtons = [optimalBtn, underBtn, overBtn];
+            
+            function setActiveButton(activeBtn) {
+                loadButtons.forEach(btn => btn.classList.remove('btn-active', 'btn-primary'));
+                loadButtons.forEach(btn => btn.classList.add('btn-secondary'));
+                activeBtn.classList.add('btn-active', 'btn-primary');
+                activeBtn.classList.remove('btn-secondary');
+            }
+
+            optimalBtn.addEventListener('click', () => { createHaulageChart(haulageData.optimal); setActiveButton(optimalBtn); });
+            underBtn.addEventListener('click', () => { createHaulageChart(haulageData.under); setActiveButton(underBtn); });
+            overBtn.addEventListener('click', () => { createHaulageChart(haulageData.over); setActiveButton(overBtn); });
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(item => item.classList.replace('tab-active', 'tab-inactive'));
+                    tab.classList.replace('tab-inactive', 'tab-active');
+                    
+                    const target = tab.getAttribute('data-tab');
+                    
+                    panels.forEach(panel => {
+                        if (panel.id === target) {
+                           panel.classList.remove('hidden');
+                           if(target === 'tab-3' && !document.getElementById('safetyChart')._chart) { createSafetyChart(); }
+                        } else {
+                           panel.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+            
+            createHaulageChart(haulageData.optimal);
+            
+            const faders = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1 });
+            faders.forEach(fader => observer.observe(fader));
+
+            function createHubDiagram() {
+                const container = document.getElementById('hub-diagram');
+                if(!container) return;
+                container.innerHTML = `<div id="hub-center" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 md:w-48 md:h-48 bg-[#BFFF00] rounded-full flex items-center justify-center text-[#1A1A1A] font-black text-xl text-center shadow-2xl z-10 p-4 hub-node font-heading">SMART HUB</div>`;
+
+                const pillars = ["WORKFORCE", "SAFETY", "EARTHWORKS", "AERIAL", "HAULAGE", "REPORTING"];
+                const angleStep = 360 / pillars.length;
+                const radius = Math.min(container.clientWidth, container.clientHeight) * 0.35;
+
+                pillars.forEach((pillar, i) => {
+                    const angle = (angleStep * i - 90) * (Math.PI / 180);
+                    const x = container.clientWidth / 2 + radius * Math.cos(angle);
+                    const y = container.clientHeight / 2 + radius * Math.sin(angle);
+
+                    const node = document.createElement('div');
+                    node.className = 'hub-node absolute';
+                    node.style.left = `${x}px`;
+                    node.style.top = `${y}px`;
+                    node.innerHTML = `<div class="hub-text bg-[#222222] border-2 border-gray-800 rounded-full w-24 h-24 flex items-center justify-center font-heading text-white text-sm text-center p-2">${pillar}</div>`;
+                    
+                    node.style.transform = 'translateX(-50%) translateY(-50%)';
+                    container.appendChild(node);
+                    
+                    const line = document.createElement('div');
+                    line.className = 'hub-line';
+                    const centerX = container.clientWidth / 2;
+                    const centerY = container.clientHeight / 2;
+                    const distance = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
+                    const rotation = Math.atan2(y - centerY, x - centerX) * (180 / Math.PI);
+                    
+                    line.style.width = `${distance - 55}px`;
+                    line.style.height = '2px';
+                    line.style.left = `${centerX}px`;
+                    line.style.top = `${centerY}px`;
+                    line.style.transformOrigin = 'left center';
+                    line.style.transform = `rotate(${rotation}deg) translateX(55px)`;
+                    container.appendChild(line);
+                });
+            }
+
+            // Debounce resize
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(createHubDiagram, 100);
+            });
+            createHubDiagram();
+        });
+    </script>
+</body>
+</html>
+
