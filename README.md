@@ -1,2 +1,0 @@
-# veralogix-report
-veralogix-report
