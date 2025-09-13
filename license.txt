@@ -1,0 +1,4 @@
+Copyright © 2025 Veralogix Group Innovation.  
+All rights reserved.  
+This repository is not licensed for redistribution, modification, or commercial use.  
+Unauthorized use is strictly prohibited.
