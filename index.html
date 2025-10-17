@@ -51,6 +51,21 @@
             height: 350px;
             max-height: 50vh;
         }
+        .mobile-menu-panel {
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            transform: translateX(100%);
+        }
+        #mobile-menu[data-state="open"] .mobile-menu-panel {
+            transform: translateX(0);
+            box-shadow: 0 0 55px rgba(191, 255, 0, 0.55);
+        }
+        @keyframes neonPulse {
+            0%, 100% { box-shadow: 0 0 12px rgba(191, 255, 0, 0.25); }
+            50% { box-shadow: 0 0 20px rgba(191, 255, 0, 0.55); }
+        }
+        #mobile-menu[data-state="open"] {
+            animation: neonPulse 2.8s infinite ease-in-out;
+        }
         @media (min-width: 768px) {
             .chart-container {
                 height: 450px;
@@ -119,6 +134,12 @@
             <div class="flex items-center space-x-2">
                 <img src="https://iili.io/F5mGF24.png" alt="Veralogix Logo" class="h-20 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/320x80/1A1A1A/FFFFFF?text=Veralogix';">
             </div>
+            <button id="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-menu" class="md:hidden flex items-center justify-center w-12 h-12 rounded-full border border-[#7fff00]/40 shadow-[0_0_15px_rgba(191,255,0,0.35)] text-[#BFFF00] hover:shadow-[0_0_25px_rgba(191,255,0,0.65)] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#BFFF00]/70 focus:ring-offset-2 focus:ring-offset-[#101010]" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+            </button>
             <nav class="hidden md:flex items-center space-x-12">
                 <a href="#why-veralogix" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xl whitespace-nowrap">WHY VERALOGIX?</a>
                 <a href="#loadscan" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xl whitespace-nowrap">LOADSCAN®</a>
@@ -147,6 +168,57 @@
             </nav>
         </div>
     </header>
+
+    <div id="mobile-menu" class="md:hidden hidden fixed inset-0 z-40" data-state="closed">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" data-mobile-menu-close></div>
+        <div class="mobile-menu-panel relative ml-auto h-full w-80 max-w-[85vw] bg-[#111111] border-l border-[#1f1f1f] shadow-[0_0_45px_rgba(191,255,0,0.35)] flex flex-col" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-label">
+            <div class="flex items-center justify-between px-6 py-6 border-b border-[#232323]">
+                <span id="mobile-menu-label" class="font-heading text-[#BFFF00] tracking-[0.25em] text-sm">NAVIGATE</span>
+                <button type="button" class="w-10 h-10 rounded-full border border-[#7fff00]/40 text-[#BFFF00] flex items-center justify-center hover:shadow-[0_0_20px_rgba(191,255,0,0.7)] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#BFFF00]/70 focus:ring-offset-2 focus:ring-offset-[#0b0b0b]" data-mobile-menu-close>
+                    <span class="sr-only">Close navigation</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="flex-1 overflow-y-auto px-6 py-8 space-y-4" aria-label="Mobile navigation">
+                <a href="#why-veralogix" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    WHY VERALOGIX?
+                </a>
+                <a href="#loadscan" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    LOADSCAN®
+                </a>
+                <a href="#trimble" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    TRIMBLE®
+                </a>
+                <a href="#cabin-eye" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    CABIN-EYE™
+                </a>
+                <a href="#vtol-drones" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    VTOL DRONES
+                </a>
+                <a href="#sentrymine" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    SENTRYMINE™
+                </a>
+                <div>
+                    <p class="text-sm font-heading text-[#BFFF00]/80 tracking-[0.3em] mb-2">SOLUTIONS</p>
+                    <a href="#solutions" class="block text-lg text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">SMART MINING SOLUTION</a>
+                    <a href="#solutions" class="block text-lg text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">OPTRON CUSTOM GNSS SOLUTIONS</a>
+                    <a href="#solutions" class="block text-lg text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">LOAD MANAGEMENT SOLUTIONS</a>
+                    <a href="#solutions" class="block text-lg text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">ROCK PILE SOLUTIONS</a>
+                </div>
+                <a href="#pilot" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    ROI
+                </a>
+                <a href="#hub" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    SMART HUB
+                </a>
+                <a href="#contact" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    CONTACT US
+                </a>
+            </nav>
+        </div>
+    </div>
 
     <main>
         <section class="relative h-screen flex items-center justify-center text-white overflow-hidden">
@@ -475,8 +547,112 @@
     </footer>
 
     <script>
+        (function () {
+            const toggleButton = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (!toggleButton || !mobileMenu) return;
+
+            const panel = mobileMenu.querySelector('.mobile-menu-panel');
+            const closeTargets = mobileMenu.querySelectorAll('[data-mobile-menu-close]');
+            const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+            let focusableElements = [];
+            let firstFocusable;
+            let lastFocusable;
+            let previouslyFocused = null;
+            let closeTimer = null;
+
+            function updateFocusable() {
+                focusableElements = Array.from(panel.querySelectorAll(focusableSelector)).filter((el) => el.offsetParent !== null);
+                firstFocusable = focusableElements[0] || panel;
+                lastFocusable = focusableElements[focusableElements.length - 1] || panel;
+            }
+
+            function openMenu() {
+                if (mobileMenu.dataset.state === 'open') return;
+                previouslyFocused = document.activeElement;
+                if (closeTimer) {
+                    window.clearTimeout(closeTimer);
+                    closeTimer = null;
+                }
+                mobileMenu.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+                mobileMenu.dataset.state = 'open';
+                toggleButton.setAttribute('aria-expanded', 'true');
+                updateFocusable();
+                window.requestAnimationFrame(() => {
+                    (firstFocusable || panel).focus({ preventScroll: true });
+                });
+                document.addEventListener('keydown', handleKeydown);
+            }
+
+            function closeMenu() {
+                if (mobileMenu.dataset.state === 'closed') return;
+                mobileMenu.dataset.state = 'closed';
+                toggleButton.setAttribute('aria-expanded', 'false');
+                document.body.classList.remove('overflow-hidden');
+                document.removeEventListener('keydown', handleKeydown);
+                if (closeTimer) window.clearTimeout(closeTimer);
+                closeTimer = window.setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                    closeTimer = null;
+                }, 350);
+                if (previouslyFocused) {
+                    previouslyFocused.focus({ preventScroll: true });
+                    previouslyFocused = null;
+                } else {
+                    toggleButton.focus({ preventScroll: true });
+                }
+            }
+
+            function handleKeydown(event) {
+                if (mobileMenu.dataset.state !== 'open') return;
+                if (event.key === 'Escape') {
+                    event.preventDefault();
+                    closeMenu();
+                    return;
+                }
+                if (event.key === 'Tab') {
+                    updateFocusable();
+                    if (!focusableElements.length) {
+                        event.preventDefault();
+                        panel.focus({ preventScroll: true });
+                        return;
+                    }
+                    if (event.shiftKey && document.activeElement === firstFocusable) {
+                        event.preventDefault();
+                        lastFocusable.focus({ preventScroll: true });
+                    } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+                        event.preventDefault();
+                        firstFocusable.focus({ preventScroll: true });
+                    }
+                }
+            }
+
+            toggleButton.addEventListener('click', () => {
+                if (mobileMenu.dataset.state === 'open') {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            });
+
+            closeTargets.forEach((target) => {
+                target.addEventListener('click', () => {
+                    closeMenu();
+                });
+            });
+
+            mobileMenu.addEventListener('transitionend', (event) => {
+                if (event.target === panel && mobileMenu.dataset.state === 'closed') {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        })();
+    </script>
+
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
-            
+
             const haulageData = {
                 optimal: {
                     labels: ['Trips', 'Diesel (Litres)', 'Cost (ZAR)'],
