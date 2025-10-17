@@ -24,11 +24,6 @@
             text-transform: uppercase;
             font-weight: 700;
         }
-        .hero-bg {
-            background-image: linear-gradient(to right, rgba(26, 26, 26, 0.9) 20%, rgba(26, 26, 26, 0.1)), url('https://iili.io/F5mcDxa.png');
-            background-size: cover;
-            background-position: center;
-        }
         .tab-active {
             border-color: #BFFF00;
             color: #BFFF00;
@@ -55,6 +50,21 @@
             margin-right: auto;
             height: 350px;
             max-height: 50vh;
+        }
+        .mobile-menu-panel {
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            transform: translateX(100%);
+        }
+        #mobile-menu[data-state="open"] .mobile-menu-panel {
+            transform: translateX(0);
+            box-shadow: 0 0 55px rgba(191, 255, 0, 0.55);
+        }
+        @keyframes neonPulse {
+            0%, 100% { box-shadow: 0 0 12px rgba(191, 255, 0, 0.25); }
+            50% { box-shadow: 0 0 20px rgba(191, 255, 0, 0.55); }
+        }
+        #mobile-menu[data-state="open"] {
+            animation: neonPulse 2.8s infinite ease-in-out;
         }
         @media (min-width: 768px) {
             .chart-container {
@@ -114,6 +124,17 @@
         }
         .mobile-menu-open .mobile-menu-line:nth-child(3) {
             transform: rotate(-45deg) translate(7px, -6px);
+        #hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translateX(-50%) translateY(-50%);
+            object-fit: cover;
         }
     </style>
 </head>
@@ -134,6 +155,41 @@
                 <a href="solutions.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs whitespace-nowrap px-1">SOLUTIONS</a>
                 <a href="smart-hub.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs whitespace-nowrap px-1">SMART HUB</a>
                 <a href="roi.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs whitespace-nowrap px-1">ROI</a>
+        <div class="w-full px-8 py-6 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="https://iili.io/F5mGF24.png" alt="Veralogix Logo" class="h-20 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/320x80/1A1A1A/FFFFFF?text=Veralogix';">
+            </div>
+            <button id="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-menu" class="md:hidden flex items-center justify-center w-12 h-12 rounded-full border border-[#7fff00]/40 shadow-[0_0_15px_rgba(191,255,0,0.35)] text-[#BFFF00] hover:shadow-[0_0_25px_rgba(191,255,0,0.65)] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#BFFF00]/70 focus:ring-offset-2 focus:ring-offset-[#101010]" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
+            </button>
+            <nav class="hidden md:flex items-center space-x-12">
+                <a href="#why-veralogix" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xl whitespace-nowrap">WHY VERALOGIX?</a>
+                <a href="#loadscan" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xl whitespace-nowrap">LOADSCAN®</a>
+                <a href="#trimble" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xl whitespace-nowrap">TRIMBLE®</a>
+                <a href="#cabin-eye" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xl whitespace-nowrap">CABIN-EYE™</a>
+                <a href="#vtol-drones" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xl whitespace-nowrap">VTOL DRONES</a>
+                <a href="#sentrymine" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xl whitespace-nowrap">SENTRYMINE™</a>
+                
+                <!-- Solutions Dropdown -->
+                <div class="relative group">
+                    <a href="#solutions" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xl flex items-center whitespace-nowrap">
+                        SOLUTIONS
+                        <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </a>
+                    <div class="absolute hidden group-hover:block bg-[#222222] border border-gray-700 mt-2 py-2 w-64 z-20 rounded-md shadow-lg">
+                        <a href="#solutions" class="block px-4 py-2 text-sm text-gray-300 hover:bg-[#2D2D2D] hover:text-[#BFFF00] font-heading">SMART MINING SOLUTION</a>
+                        <a href="#solutions" class="block px-4 py-2 text-sm text-gray-300 hover:bg-[#2D2D2D] hover:text-[#BFFF00] font-heading">OPTRON CUSTOM GNSS SOLUTIONS</a>
+                        <a href="#solutions" class="block px-4 py-2 text-sm text-gray-300 hover:bg-[#2D2D2D] hover:text-[#BFFF00] font-heading">LOAD MANAGEMENT SOLUTIONS</a>
+                        <a href="#solutions" class="block px-4 py-2 text-sm text-gray-300 hover:bg-[#2D2D2D] hover:text-[#BFFF00] font-heading">ROCK PILE SOLUTIONS</a>
+                    </div>
+                </div>
+
+                <a href="#pilot" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xl whitespace-nowrap">ROI</a>
+                <a href="#hub" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xl whitespace-nowrap">SMART HUB</a>
+                <a href="#contact" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xl whitespace-nowrap">CONTACT US</a>
             </nav>
 
             <!-- Mobile Menu Button -->
@@ -161,14 +217,70 @@
         </nav>
     </header>
 
+    <div id="mobile-menu" class="md:hidden hidden fixed inset-0 z-40" data-state="closed">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" data-mobile-menu-close></div>
+        <div class="mobile-menu-panel relative ml-auto h-full w-80 max-w-[85vw] bg-[#111111] border-l border-[#1f1f1f] shadow-[0_0_45px_rgba(191,255,0,0.35)] flex flex-col" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-label">
+            <div class="flex items-center justify-between px-6 py-6 border-b border-[#232323]">
+                <span id="mobile-menu-label" class="font-heading text-[#BFFF00] tracking-[0.25em] text-sm">NAVIGATE</span>
+                <button type="button" class="w-10 h-10 rounded-full border border-[#7fff00]/40 text-[#BFFF00] flex items-center justify-center hover:shadow-[0_0_20px_rgba(191,255,0,0.7)] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#BFFF00]/70 focus:ring-offset-2 focus:ring-offset-[#0b0b0b]" data-mobile-menu-close>
+                    <span class="sr-only">Close navigation</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="flex-1 overflow-y-auto px-6 py-8 space-y-4" aria-label="Mobile navigation">
+                <a href="#why-veralogix" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    WHY VERALOGIX?
+                </a>
+                <a href="#loadscan" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    LOADSCAN®
+                </a>
+                <a href="#trimble" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    TRIMBLE®
+                </a>
+                <a href="#cabin-eye" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    CABIN-EYE™
+                </a>
+                <a href="#vtol-drones" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    VTOL DRONES
+                </a>
+                <a href="#sentrymine" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    SENTRYMINE™
+                </a>
+                <div>
+                    <p class="text-sm font-heading text-[#BFFF00]/80 tracking-[0.3em] mb-2">SOLUTIONS</p>
+                    <a href="#solutions" class="block text-lg text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">SMART MINING SOLUTION</a>
+                    <a href="#solutions" class="block text-lg text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">OPTRON CUSTOM GNSS SOLUTIONS</a>
+                    <a href="#solutions" class="block text-lg text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">LOAD MANAGEMENT SOLUTIONS</a>
+                    <a href="#solutions" class="block text-lg text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">ROCK PILE SOLUTIONS</a>
+                </div>
+                <a href="#pilot" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    ROI
+                </a>
+                <a href="#hub" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    SMART HUB
+                </a>
+                <a href="#contact" class="block text-xl font-heading text-gray-200 hover:text-[#BFFF00] transition duration-300 hover:translate-x-2">
+                    CONTACT US
+                </a>
+            </nav>
+        </div>
+    </div>
+
     <main>
-        <section class="hero-bg h-screen flex items-center justify-start text-white">
-            <div class="container mx-auto px-6 md:px-12">
-                <div class="max-w-2xl text-left">
+        <section class="relative h-screen flex items-center justify-center text-white overflow-hidden">
+            <video id="hero-video" autoplay loop muted playsinline>
+                <source src="assets/Drone_Over_Open_sPit_Mine_Loop.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="absolute top-0 left-0 w-full h-full bg-black/60"></div>
+            <div class="relative z-10 container mx-auto px-4 md:px-12">
+                <div class="max-w-3xl text-center mx-auto">
                     <p class="font-heading text-[#BFFF00] font-semibold tracking-widest mb-2 text-sm">YOUR ROI SUCCESS IS</p>
                     <h2 class="font-heading text-5xl md:text-7xl font-black mb-4 leading-tight">AUTONOMOUS</h2>
-                    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-lg">We're not just testing—we're targeting your measurable returns. And the future is autonomous.</p>
-                    <div class="flex items-center bg-black/50 backdrop-blur-sm p-2 max-w-md border border-gray-700">
+                    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-lg mx-auto">We're not just testing—we're targeting your measurable returns. And the future is autonomous.</p>
+                    <div class="flex items-center bg-black/50 backdrop-blur-sm p-2 max-w-md border border-gray-700 mx-auto">
                         <input type="text" placeholder="Start your exploration here..." class="bg-transparent w-full text-white placeholder-gray-500 focus:outline-none px-4">
                         <button class="bg-[#BFFF00] text-black p-3 hover:bg-[#d8ff66] transition-colors duration-300">
                              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -179,24 +291,24 @@
         </section>
         
         <section id="intro" class="py-20 bg-[#222222]">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
                      <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">THE DAY BEGINS WITH CONFIDENCE, NOT PAPERWORK</h2>
                      <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">Follow an operator—we'll call him Tshepo. His day begins not at the gate, but on the bus, transforming travel time into saved safety time.</p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8 text-center">
                     <div class="fade-in bg-[#1A1A1A] p-8 border border-gray-800">
-                        <img src="https://iili.io/F5yAEox.png" alt="Automated Compliance Icon" class="h-12 mx-auto mb-4">
+                        <img src="https://iili.io/F5yAEox.png" alt="Automated Compliance Icon" class="h-12 mx-auto mb-4" onerror="this.onerror=null;this.src='https://placehold.co/48x48/1A1A1A/FFFFFF?text=Icon';">
                         <h3 class="text-xl mb-2 text-white font-heading">AUTOMATED COMPLIANCE</h3>
                         <p class="text-gray-400">SentryMine™ works overnight verifying licenses and medicals. SentryTrack™ tracks attendance and fitness for duty.</p>
                     </div>
                     <div class="fade-in bg-[#1A1A1A] p-8 border border-gray-800">
-                         <img src="https://iili.io/F5yA0tj.png" alt="Instant Check-in Icon" class="h-12 mx-auto mb-4">
+                         <img src="https://iili.io/F5yA0tj.png" alt="Instant Check-in Icon" class="h-12 mx-auto mb-4" onerror="this.onerror=null;this.src='https://placehold.co/48x48/1A1A1A/FFFFFF?text=Icon';">
                         <h3 class="text-xl mb-2 text-white font-heading">INSTANT CHECK-IN</h3>
                         <p class="text-gray-400">On the bus, a tap of his smart badge instantly logs attendance, creating a reliable, geo-locked audit trail.</p>
                     </div>
                     <div class="fade-in bg-[#1A1A1A] p-8 border border-gray-800">
-                         <img src="https://iili.io/F5yAGMQ.png" alt="Mobile Toolbox Talk Icon" class="h-12 mx-auto mb-4">
+                         <img src="https://iili.io/F5yAGMQ.png" alt="Mobile Toolbox Talk Icon" class="h-12 mx-auto mb-4" onerror="this.onerror=null;this.src='https://placehold.co/48x48/1A1A1A/FFFFFF?text=Icon';">
                         <h3 class="text-xl mb-2 text-white font-heading">MOBILE TOOLBOX TALK</h3>
                         <p class="text-gray-400">Daily safety briefings on the bus improve message retention and ensure the team arrives at the face ready to work.</p>
                     </div>
@@ -205,14 +317,17 @@
         </section>
 
         <section id="loadscan" class="py-20 bg-[#1E1E1E]">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
                      <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">Loadscan®: MAXIMIZING ASSET VALUE & TRANSPARENCY</h2>
                      <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">The ultimate tool for haulage optimization, providing indisputable, accurate data to protect assets and ensure fair compensation.</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div class="fade-in">
-                        <img src="https://iili.io/F77K3js.png" alt="Loadscan System in Action" class="w-full h-full object-cover border-4 border-gray-800">
+                        <img src="https://iili.io/F77K3js.png" alt="Loadscan System in Action" class="w-full h-full object-cover border-4 border-gray-800" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1E1E1E/FFFFFF?text=Loadscan';">
+                        <div class="mt-6 text-center">
+                            <a href="https://veralogix-group-innovation.github.io/smart-mining-solution/loadscan.html" target="_blank" rel="noopener noreferrer" class="btn-primary px-8 py-4 hover:bg-[#d8ff66] transition-all duration-300 transform hover:scale-105 inline-block font-heading">READ MORE</a>
+                        </div>
                     </div>
                     <div class="fade-in space-y-6">
                         <div class="bg-[#222222] p-6 border border-gray-800">
@@ -233,14 +348,14 @@
         </section>
 
         <section id="trimble" class="py-20 bg-[#222222]">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
                      <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">Trimble®: PRECISION & PROFITABILITY</h2>
                      <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">A grade control technology platform that is a strategic imperative to de-risk operations, enhance profitability, and secure a long-term social license to operate.</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div class="fade-in">
-                        <img src="https://iili.io/F77KTue.png" alt="Trimble Earthworks System" class="w-full h-full object-cover border-4 border-gray-800">
+                        <img src="https://iili.io/F77KTue.png" alt="Trimble Earthworks System" class="w-full h-full object-cover border-4 border-gray-800" onerror="this.onerror=null;this.src='https://placehold.co/600x400/222222/FFFFFF?text=Trimble';">
                     </div>
                     <div class="fade-in space-y-6">
                         <div class="bg-[#1A1A1A] p-6 border border-gray-800">
@@ -261,7 +376,7 @@
         </section>
 
         <section id="cabin-eye" class="py-20 bg-[#1E1E1E]">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
                      <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">Cabin-Eye™: THE INTERNAL GUARDIAN</h2>
                      <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">A proactive layer of defense using ruggedized, in-cab camera technology to monitor operator alertness and prevent fatigue-related incidents.</p>
@@ -282,21 +397,21 @@
                         </div>
                     </div>
                     <div class="fade-in">
-                        <img src="https://iili.io/F77FiyF.png" alt="Cabin-Eye Technology" class="w-full h-full object-cover border-4 border-gray-800">
+                        <img src="https://iili.io/F77FiyF.png" alt="Cabin-Eye Technology" class="w-full h-full object-cover border-4 border-gray-800" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1E1E1E/FFFFFF?text=Cabin-Eye';">
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="vtol-drones" class="py-20 bg-[#222222]">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
                      <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">VTOL DRONES™: YOUR EYE IN THE SKY</h2>
                      <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">Automate dull, dangerous, and dirty jobs with advanced Vertical Take-Off and Landing drones that provide a complete, intelligent view of the mine.</p>
                 </div>
                 <div class="grid md:grid-cols-5 gap-8 items-center">
                     <div class="md:col-span-2 fade-in">
-                        <img src="https://iili.io/F77F43B.png" alt="ARACE ROC Pro VTOL Drone" class="w-full">
+                        <img src="https://iili.io/F77F43B.png" alt="ARACE ROC Pro VTOL Drone" class="w-full" onerror="this.onerror=null;this.src='https://placehold.co/600x400/222222/FFFFFF?text=VTOL+Drone';">
                     </div>
                     <div class="md:col-span-3 fade-in space-y-6">
                         <div class="bg-[#1A1A1A] p-6 border border-gray-800">
@@ -325,7 +440,7 @@
         </section>
 
         <section id="solutions" class="py-20 bg-[#1E1E1E]">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">AN INTEGRATED ECOSYSTEM FOR PEAK PERFORMANCE</h2>
                     <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">This isn't just a collection of tools; it's one intelligent, connected platform. Explore the five pillars of our solution.</p>
@@ -337,7 +452,7 @@
                         <button data-tab="tab-2" class="tab-button tab-inactive text-sm md:text-base py-3 px-2 md:px-6 border-b-2 transition-all duration-300 font-heading">PRECISION EARTHWORKS</button>
                         <button data-tab="tab-3" class="tab-button tab-inactive text-sm md:text-base py-3 px-2 md:px-6 border-b-2 transition-all duration-300 font-heading">PROACTIVE SAFETY</button>
                         <button data-tab="tab-4" class="tab-button tab-inactive text-sm md:text-base py-3 px-2 md:px-6 border-b-2 transition-all duration-300 font-heading">AERIAL INTELLIGENCE</button>
-                        <button data-tab="tab-5" class="tab-button tab-inactive text-sm md:text-base py-3 px-2 md:px-6 border-b-2 transition-all duration-300 font-heading">WORKFORCE MANAGEMENT</button>
+                        <button data-tab-5" class="tab-button tab-inactive text-sm md:text-base py-3 px-2 md:px-6 border-b-2 transition-all duration-300 font-heading">WORKFORCE MANAGEMENT</button>
                     </div>
                     
                     <div id="tab-content" class="min-h-[600px] py-4">
@@ -361,9 +476,9 @@
                                 <p>Powered by Trimble®, this system guides operators to centimetre-level accuracy. It eliminates rework, cuts fuel and maintenance costs, and ensures compliance with South Africa's strict rehabilitation laws. We enhance this with OPTRON custom GNSS solutions for operational backup and peace of mind, ensuring reliability with robust enclosures and antenna mountings.</p>
                             </div>
                             <div class="grid md:grid-cols-2 gap-8 items-center">
-                                <img src="https://freeimage.host/i/F5y4f9V" alt="Precision Earthworks" class="w-full">
+                                <img src="https://freeimage.host/i/F5y4f9V" alt="Precision Earthworks" class="w-full" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1E1E1E/FFFFFF?text=Earthworks';">
                                 <div class="text-center bg-[#1A1A1A] p-6 border border-gray-800">
-                                    <img src="https://i.imgur.com/G3tS4RV.png" alt="OPTRON GNSS Enclosure" class="w-full mb-4">
+                                    <img src="https://i.imgur.com/G3tS4RV.png" alt="OPTRON GNSS Enclosure" class="w-full mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1A1A1A/FFFFFF?text=OPTRON';">
                                     <h4 class="text-lg text-white font-heading">RELIABLE SUPPORT & PEACE OF MIND</h4>
                                     <p class="text-gray-400">OPTRON custom enclosures and mountings provide robust, reliable backup for surveyors and operators.</p>
                                 </div>
@@ -412,7 +527,7 @@
                                 <p>The SentryMine™ and SentryTrack™ platforms ensure 100% of personnel are 100% compliant before they even step on site. This strengthens DMRE compliance, reduces audit prep from weeks to minutes, and eliminates queues to increase the time available for moving coal.</p>
                             </div>
                              <div class="flex justify-center">
-                                <img src="https://freeimage.host/i/F5ypM0B" alt="Workforce Management Dashboard" class="max-w-full md:max-w-2xl border-4 border-gray-700">
+                                <img src="https://freeimage.host/i/F5ypM0B" alt="Workforce Management Dashboard" class="max-w-full md:max-w-2xl border-4 border-gray-700" onerror="this.onerror=null;this.src='https://placehold.co/800x600/1E1E1E/FFFFFF?text=Dashboard';">
                             </div>
                         </div>
                     </div>
@@ -421,14 +536,14 @@
         </section>
         
         <section id="sentrymine" class="py-20 bg-[#1E1E1E]">
-            <div class="container mx-auto px-6">
+            <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
                      <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">SentryMine™: THE NERVE CENTER</h2>
                      <p class="text-lg text-gray-400 max-w-3xl mx-auto fade-in">The foundational layer of your smart mine. SentryMine™ is the compliance and productivity engine that ensures every person on site is safe, certified, and ready to work.</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div class="fade-in">
-                        <img src="https://iili.io/F77K08P.png" alt="SentryMine Dashboard" class="w-full border-4 border-gray-800">
+                        <img src="https://iili.io/F77K08P.png" alt="SentryMine Dashboard" class="w-full border-4 border-gray-800" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1E1E1E/FFFFFF?text=SentryMine';">
                     </div>
                     <div class="fade-in space-y-6">
                         <div class="bg-[#222222] p-6 border border-gray-800">
@@ -449,7 +564,7 @@
         </section>
 
         <section id="hub" class="py-20 bg-[#222222]">
-            <div class="container mx-auto px-6 text-center">
+            <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl md:text-4xl text-white mb-4 fade-in font-heading">BRINGING IT ALL TOGETHER: THE SMART HUB</h2>
                 <p class="text-lg text-gray-400 max-w-3xl mx-auto mb-16 fade-in">This isn't a collection of separate products; it's one integrated system for total intelligence, turning data into actionable insights for workforce management and production optimization.</p>
                 
@@ -460,7 +575,7 @@
         </section>
 
         <section id="pilot" class="py-20 bg-[#1E1E1E]">
-            <div class="container mx-auto px-6 text-center">
+            <div class="container mx-auto px-4 text-center">
                  <div class="flex justify-center fade-in">
                     <div class="bg-[#222222] p-8 md:p-12 max-w-4xl border border-[#BFFF00]/20">
                         <h2 class="text-3xl md:text-4xl text-white mb-4 font-heading">YOUR ROI SUCCESS IS <span class="text-[#BFFF00]">AUTONOMOUS</span>.</h2>
@@ -472,12 +587,116 @@
         </section>
     </main>
 
-    <footer class="bg-black py-8">
-        <div class="container mx-auto px-6 text-center text-gray-500">
+    <footer class="bg-black py-8" id="contact">
+        <div class="container mx-auto px-4 text-center text-gray-500">
             <p>&copy; 2025 Veralogix Group. All rights reserved.</p>
             <p class="text-sm mt-2">Joining The Dots.</p>
         </div>
     </footer>
+
+    <script>
+        (function () {
+            const toggleButton = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (!toggleButton || !mobileMenu) return;
+
+            const panel = mobileMenu.querySelector('.mobile-menu-panel');
+            const closeTargets = mobileMenu.querySelectorAll('[data-mobile-menu-close]');
+            const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+            let focusableElements = [];
+            let firstFocusable;
+            let lastFocusable;
+            let previouslyFocused = null;
+            let closeTimer = null;
+
+            function updateFocusable() {
+                focusableElements = Array.from(panel.querySelectorAll(focusableSelector)).filter((el) => el.offsetParent !== null);
+                firstFocusable = focusableElements[0] || panel;
+                lastFocusable = focusableElements[focusableElements.length - 1] || panel;
+            }
+
+            function openMenu() {
+                if (mobileMenu.dataset.state === 'open') return;
+                previouslyFocused = document.activeElement;
+                if (closeTimer) {
+                    window.clearTimeout(closeTimer);
+                    closeTimer = null;
+                }
+                mobileMenu.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+                mobileMenu.dataset.state = 'open';
+                toggleButton.setAttribute('aria-expanded', 'true');
+                updateFocusable();
+                window.requestAnimationFrame(() => {
+                    (firstFocusable || panel).focus({ preventScroll: true });
+                });
+                document.addEventListener('keydown', handleKeydown);
+            }
+
+            function closeMenu() {
+                if (mobileMenu.dataset.state === 'closed') return;
+                mobileMenu.dataset.state = 'closed';
+                toggleButton.setAttribute('aria-expanded', 'false');
+                document.body.classList.remove('overflow-hidden');
+                document.removeEventListener('keydown', handleKeydown);
+                if (closeTimer) window.clearTimeout(closeTimer);
+                closeTimer = window.setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                    closeTimer = null;
+                }, 350);
+                if (previouslyFocused) {
+                    previouslyFocused.focus({ preventScroll: true });
+                    previouslyFocused = null;
+                } else {
+                    toggleButton.focus({ preventScroll: true });
+                }
+            }
+
+            function handleKeydown(event) {
+                if (mobileMenu.dataset.state !== 'open') return;
+                if (event.key === 'Escape') {
+                    event.preventDefault();
+                    closeMenu();
+                    return;
+                }
+                if (event.key === 'Tab') {
+                    updateFocusable();
+                    if (!focusableElements.length) {
+                        event.preventDefault();
+                        panel.focus({ preventScroll: true });
+                        return;
+                    }
+                    if (event.shiftKey && document.activeElement === firstFocusable) {
+                        event.preventDefault();
+                        lastFocusable.focus({ preventScroll: true });
+                    } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+                        event.preventDefault();
+                        firstFocusable.focus({ preventScroll: true });
+                    }
+                }
+            }
+
+            toggleButton.addEventListener('click', () => {
+                if (mobileMenu.dataset.state === 'open') {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            });
+
+            closeTargets.forEach((target) => {
+                target.addEventListener('click', () => {
+                    closeMenu();
+                });
+            });
+
+            mobileMenu.addEventListener('transitionend', (event) => {
+                if (event.target === panel && mobileMenu.dataset.state === 'closed') {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        })();
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -500,6 +719,7 @@
                 });
             });
             
+
             const haulageData = {
                 optimal: {
                     labels: ['Trips', 'Diesel (Litres)', 'Cost (ZAR)'],
@@ -710,4 +930,3 @@
     </script>
 </body>
 </html>
-
