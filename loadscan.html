@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loadscan® | Veralogix Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1A1A1A;
+            color: #CCCCCC;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(26, 26, 26, 0.9) 20%, rgba(26, 26, 26, 0.1)), url('https://iili.io/F77K3js.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .btn-primary {
+            background-color: #BFFF00;
+            color: #1A1A1A;
+            font-weight: 700;
+        }
+        .btn-primary:hover {
+            background-color: #d8ff66;
+        }
+        .btn-secondary {
+            background-color: #2D2D2D;
+            color: #CCCCCC;
+        }
+        .btn-secondary:hover {
+            background-color: #3f3f3f;
+        }
+        /* Mobile Menu Styles */
+        .mobile-menu-open .mobile-menu-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .mobile-menu-open .mobile-menu-line:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-menu-open .mobile-menu-line:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <header class="bg-[#1A1A1A]/80 backdrop-blur-lg fixed top-0 left-0 right-0 z-50 border-b border-gray-800">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <a href="index.html">
+                    <img src="https://iili.io/F5mGF24.png" alt="Veralogix Logo" class="h-8 w-auto">
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex items-center space-x-3">
+                <a href="loadscan.html" class="text-[#BFFF00] hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs whitespace-nowrap px-1">LOADSCAN®</a>
+                <a href="trimble.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs whitespace-nowrap px-1">TRIMBLE®</a>
+                <a href="cabin-eye.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs whitespace-nowrap px-1">CABIN-EYE™</a>
+                <a href="vtol-drones.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs whitespace-nowrap px-1">VTOL DRONES™</a>
+                <a href="sentrymine.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs whitespace-nowrap px-1">SENTRYMINE™</a>
+                <a href="solutions.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs whitespace-nowrap px-1">SOLUTIONS</a>
+                <a href="smart-hub.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs whitespace-nowrap px-1">SMART HUB</a>
+                <a href="roi.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-xs whitespace-nowrap px-1">ROI</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="lg:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1">
+                <span class="mobile-menu-line block w-6 h-0.5 bg-gray-300 transition-all duration-300"></span>
+                <span class="mobile-menu-line block w-6 h-0.5 bg-gray-300 transition-all duration-300"></span>
+                <span class="mobile-menu-line block w-6 h-0.5 bg-gray-300 transition-all duration-300"></span>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <nav id="mobile-menu" class="lg:hidden bg-[#1A1A1A]/95 backdrop-blur-lg border-t border-gray-800 hidden">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="loadscan.html" class="text-[#BFFF00] hover:text-[#BFFF00] transition-colors duration-300 font-heading text-sm py-2 border-b border-gray-800">LOADSCAN®</a>
+                    <a href="trimble.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-sm py-2 border-b border-gray-800">TRIMBLE®</a>
+                    <a href="cabin-eye.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-sm py-2 border-b border-gray-800">CABIN-EYE™</a>
+                    <a href="vtol-drones.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-sm py-2 border-b border-gray-800">VTOL DRONES™</a>
+                    <a href="sentrymine.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-sm py-2 border-b border-gray-800">SENTRYMINE™</a>
+                    <a href="solutions.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-sm py-2 border-b border-gray-800">SOLUTIONS</a>
+                    <a href="smart-hub.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-sm py-2 border-b border-gray-800">SMART HUB</a>
+                    <a href="roi.html" class="text-gray-300 hover:text-[#BFFF00] transition-colors duration-300 font-heading text-sm py-2">ROI</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section class="hero-bg h-96 flex items-center justify-center text-white">
+            <div class="container mx-auto px-6 text-center">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="font-heading text-4xl md:text-6xl font-black mb-4 leading-tight">LOADSCAN®</h1>
+                    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">Maximizing Asset Value & Transparency Through Precise Load Measurement</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Breadcrumb -->
+        <section class="bg-[#222222] py-4">
+            <div class="container mx-auto px-6">
+                <nav class="flex" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                        <li class="inline-flex items-center">
+                            <a href="index.html" class="text-gray-400 hover:text-[#BFFF00] font-heading text-xs">HOME</a>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <span class="mx-2 text-gray-500">/</span>
+                                <span class="text-[#BFFF00] font-heading text-xs">LOADSCAN®</span>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="py-20 bg-[#1A1A1A]">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="fade-in mb-12">
+                        <h2 class="text-3xl md:text-4xl text-white mb-6 font-heading">THE ULTIMATE HAULAGE OPTIMIZATION TOOL</h2>
+                        <p class="text-lg text-gray-400 mb-6">Loadscan® provides indisputable, accurate data to protect assets and ensure fair compensation. This drive-through scanning technology measures the exact volume of every load without stopping, revolutionizing how mining operations manage their haulage activities.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                        <div class="fade-in">
+                            <img src="https://iili.io/F77K3js.png" alt="Loadscan System in Action" class="w-full rounded-lg border-4 border-gray-800">
+                        </div>
+                        <div class="fade-in space-y-6">
+                            <div class="bg-[#222222] p-6 border border-gray-800 rounded-lg">
+                                <h3 class="font-heading text-xl text-[#BFFF00] mb-3">TRANSPARENT CONTRACTOR MANAGEMENT</h3>
+                                <p class="text-gray-400">With multiple hauling contractors, disputes over moved tonnage can arise. Loadscan® provides an indisputable, transparent basis for payment, eliminating friction and ensuring fair compensation.</p>
+                            </div>
+                            <div class="bg-[#222222] p-6 border border-gray-800 rounded-lg">
+                                <h3 class="font-heading text-xl text-[#BFFF00] mb-3">PROTECTING CRITICAL ASSETS</h3>
+                                <p class="text-gray-400">The health of your haul truck fleet is the heart of the operation. By preventing consistent overloading that damages frames, transmissions, and tyres, we extend the life of your most expensive assets.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fade-in mb-12">
+                        <h2 class="text-3xl md:text-4xl text-white mb-6 font-heading">KEY BENEFITS</h2>
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <div class="bg-[#222222] p-8 border border-gray-800 rounded-lg text-center">
+                                <div class="text-[#BFFF00] text-4xl mb-4">10-15%</div>
+                                <h3 class="font-heading text-lg text-white mb-2">INCREASED MATERIAL MOVED</h3>
+                                <p class="text-gray-400 text-sm">Optimize load factors to maximize productivity without compromising equipment safety.</p>
+                            </div>
+                            <div class="bg-[#222222] p-8 border border-gray-800 rounded-lg text-center">
+                                <div class="text-[#BFFF00] text-4xl mb-4">50%</div>
+                                <h3 class="font-heading text-lg text-white mb-2">REDUCED COMPONENT FAILURES</h3>
+                                <p class="text-gray-400 text-sm">Prevent major component failures from overloading, saving significant maintenance costs.</p>
+                            </div>
+                            <div class="bg-[#222222] p-8 border border-gray-800 rounded-lg text-center">
+                                <div class="text-[#BFFF00] text-4xl mb-4">100%</div>
+                                <h3 class="font-heading text-lg text-white mb-2">ACCURATE RECONCILIATION</h3>
+                                <p class="text-gray-400 text-sm">Ensure complete transparency in contractor management and financial planning.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fade-in mb-12">
+                        <h2 class="text-3xl md:text-4xl text-white mb-6 font-heading">HOW IT WORKS</h2>
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-[#BFFF00] text-[#1A1A1A] font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">1</div>
+                                <div>
+                                    <h3 class="font-heading text-lg text-white mb-2">DRIVE-THROUGH SCANNING</h3>
+                                    <p class="text-gray-400">Trucks drive through the Loadscan® portal at normal operating speed without stopping, maintaining operational efficiency.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-[#BFFF00] text-[#1A1A1A] font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">2</div>
+                                <div>
+                                    <h3 class="font-heading text-lg text-white mb-2">PRECISE MEASUREMENT</h3>
+                                    <p class="text-gray-400">Advanced laser technology captures the exact volume and profile of every load with millimeter accuracy.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-[#BFFF00] text-[#1A1A1A] font-bold rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0">3</div>
+                                <div>
+                                    <h3 class="font-heading text-lg text-white mb-2">REAL-TIME DATA</h3>
+                                    <p class="text-gray-400">Instant data processing provides immediate feedback to operators and management systems for optimal decision-making.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="py-20 bg-[#222222]">
+            <div class="container mx-auto px-6 text-center">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl text-white mb-4 font-heading">READY TO OPTIMIZE YOUR HAULAGE?</h2>
+                    <p class="text-lg text-gray-400 mb-8">Let's discuss how Loadscan® can transform your haulage operations with measurable results and transparent contractor management.</p>
+                    <a href="index.html#pilot" class="btn-primary px-8 py-4 hover:bg-[#d8ff66] transition-all duration-300 transform hover:scale-105 inline-block font-heading">GET STARTED</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black py-8">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>&copy; 2025 Veralogix Group. All rights reserved.</p>
+            <p class="text-sm mt-2">Joining The Dots.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                    mobileMenuButton.classList.toggle('mobile-menu-open');
+                });
+
+                // Close mobile menu when clicking on nav links
+                const mobileNavLinks = mobileMenu.querySelectorAll('a');
+                mobileNavLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuButton.classList.remove('mobile-menu-open');
+                    });
+                });
+            }
+
+            // Fade in animations
+            const faders = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1 });
+            faders.forEach(fader => observer.observe(fader));
+        });
+    </script>
+</body>
+</html>
+
